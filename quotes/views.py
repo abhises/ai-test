@@ -41,7 +41,6 @@ class GenerateQuoteView(APIView):
                 quote=quote_text
             )
 
-            # Serialize and return the saved object
             output_serializer = GeneratedQuoteSerializer(saved)
             return Response(output_serializer.data, status=status.HTTP_200_OK)
 
@@ -58,3 +57,17 @@ class QuoteListView(APIView):
         quotes = GeneratedQuote.objects.all().order_by("-created_at")
         serializer = GeneratedQuoteSerializer(quotes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class QuoteDeleteView(APIView):
+    """
+    DELETE: Delete a quote by its ID
+    URL: /api/delete/<id>/
+    """
+    def delete(self, request, pk):
+        try:
+            quote = GeneratedQuote.objects.get(pk=pk)
+            quote.delete()
+            return Response({"success": True, "message": "Quote deleted"}, status=status.HTTP_200_OK)
+        except GeneratedQuote.DoesNotExist:
+            return Response({"success": False, "error": "Quote not found"}, status=status.HTTP_404_NOT_FOUND)
