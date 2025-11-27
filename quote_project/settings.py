@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
+# just testing
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -133,3 +134,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
